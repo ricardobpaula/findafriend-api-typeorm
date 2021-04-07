@@ -1,16 +1,21 @@
+import 'reflect-metadata'
+
 import cors from 'cors'
 import express from 'express'
 
-const server = express();
+import dotenv from 'dotenv'
 
-server.use(cors());
-server.use(express.json());
+const app = express()
 
+dotenv.config()
 
-server.get('/',(request, response) => {
-    response.json({message: 'Hello'})
-});
+app.use(cors());
+app.use(express.json())
 
-server.listen(3000, () => {
-    console.log('Server started on port: 3000')
-});
+app.get('/api/',(request, response) => {
+    response.json({message: 'Hello World'})
+})
+
+app.listen(process.env.APP_PORT, () => {
+    console.log(`Server started on port: ${process.env.APP_PORT}`)
+})
