@@ -14,9 +14,6 @@ class User {
     @Column({ name: 'last_name', nullable: false })
     lastName: string
 
-    @Column({ name: 'user_name', unique: true, nullable: false })
-    userName: string
-
     @Column({ unique:true, nullable: false })
     phone: string
 
