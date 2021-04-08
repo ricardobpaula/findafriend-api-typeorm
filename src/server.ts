@@ -7,6 +7,8 @@ import dotenv from 'dotenv'
 
 import 'express-async-errors'
 import './database'
+
+import AppError from './errors/AppError'
 import routes from './routes'
 
 const app = express()
@@ -18,14 +20,10 @@ app.use(express.json())
 
 app.use('/api',routes)
 
-// app.get('/api/',(request, response) => {
-//     response.json({message: 'Hello World'})
-// })
-
-app.use((err: Error, request:Request, response:Response, _: NextFunction) => {
-    if (err instanceof Error) {
+app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
+    if (err instanceof AppError) {
       return response
-        .status(400)
+        .status(err.statusCode)
         .json({ status: 'error', message: err.message });
     }
   
@@ -34,7 +32,7 @@ app.use((err: Error, request:Request, response:Response, _: NextFunction) => {
     return response
       .status(500)
       .json({ status: 'error', message: 'Internal server error' });
-  });
+  })
 
 app.listen(process.env.APP_PORT, () => {
     console.log(`Server started on port: ${process.env.APP_PORT}`)
