@@ -1,8 +1,8 @@
 import { Router } from 'express'
 import CreateUserService from '../services/CreateUserService'
+import AuthenticateUserService from '../services/AuthenticateUserService'
 
 const usersRouter = Router()
-
 usersRouter.post('/', async(request, response) => {
     const {
         firstName,
@@ -14,8 +14,9 @@ usersRouter.post('/', async(request, response) => {
         role } = request.body
 
     const createUser = new CreateUserService()
+    const authService = new AuthenticateUserService()
 
-    const user = await createUser.execute({
+    await createUser.execute({
         firstName,
         lastName,
         phone,
@@ -24,6 +25,11 @@ usersRouter.post('/', async(request, response) => {
         isFinding,
         role })
 
+    const { user, token } = await authService.execute({
+        email,
+        password
+    })
+    
     const userReturned = {
         id: user.id,
         firstName:user.firstName,
@@ -34,7 +40,7 @@ usersRouter.post('/', async(request, response) => {
         role:user.role,
     }
 
-    return response.status(201).json(userReturned)
+    return response.status(201).json({user: userReturned, token})
 
 })
 

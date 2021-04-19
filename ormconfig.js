@@ -10,7 +10,7 @@ module.exports = {
     entities: [process.env.TYPEORM_ENTITIES],
     migrations: [process.env.TYPEORM_MIGRATIONS],
     cli: {
-        entitiesDir: 'src/models/',
-        migrationsDir: 'src/database/migrations/',
+        entitiesDir: 'src/models',
+        migrationsDir: 'src/database/migrations',
     }
-};
+}

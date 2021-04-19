@@ -7,13 +7,13 @@ import AppError from './../errors/AppError'
 import User from './../models/User'
 
 interface Request {
-    email: string;
-    password: string;
+    email: string
+    password: string
   }
   
 interface Response {
-    user: User;
-    token: string;
+    user: User
+    token: string
 }
 
 class AuthenticateUserService {
@@ -35,7 +35,7 @@ class AuthenticateUserService {
             
         }
 
-        const { secret, expiresIn } = authConfig.jwt
+        const { secret, expiresIn } = authConfig
 
         const token = sign({}, String(secret), {
             subject: user.id.toString(),
