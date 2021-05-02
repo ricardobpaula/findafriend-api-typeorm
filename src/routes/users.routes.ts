@@ -40,7 +40,7 @@ usersRouter.post('/', async(request, response) => {
         role:user.role,
     }
 
-    return response.status(201).json({user: userReturned, token})
+    return response.status(201).cookie('user_id',user.id).json({user: userReturned, token})
 
 })
 

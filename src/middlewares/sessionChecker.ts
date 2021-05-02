@@ -7,16 +7,21 @@ const sessionChecker = ((request:Request, response:Response, next:NextFunction) 
 
     if (request.headers.authorization) {
 
-        const token = request.headers.authorization.split(' ')[1]
-        const tokenVerified = jwt.verify(token, jwtConfig.secret)
+        try {
+            const token = request.headers.authorization.split(' ')[1]
+            const tokenDecoded = jwt.decode(token)
+            const { user_id } = request.cookies
+            const tokenVerified = jwt.verify(token, jwtConfig.secret)
+            
+            if(!tokenVerified || user_id != tokenDecoded?.sub){
+                throw new AppError('Cannot validate user',401)
+            }
 
-        if(tokenVerified){
-            console.log('User found')
-        }else{
-            throw new AppError('Cannot validate token',401)
+            next()
+
+        }catch(error){
+            throw new AppError(error.message,401)
         }
-
-        next()
     } else {
         throw new AppError('No User Session Found',401)
     }

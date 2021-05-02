@@ -3,6 +3,7 @@ import 'reflect-metadata'
 import cors from 'cors'
 import express, { Request, Response, NextFunction } from 'express'
 import session from 'express-session'
+import cookieParser from 'cookie-parser'
 
 import dotenv from 'dotenv'
 
@@ -18,6 +19,7 @@ const app = express()
 
 dotenv.config()
 
+app.use(cookieParser())
 app.use(cors())
 app.use(express.json())
 

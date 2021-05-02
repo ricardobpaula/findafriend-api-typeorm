@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm'
+import Pet from './Pet'
 
 export type UserRoleType = "admin" | "commom"
 
@@ -9,32 +10,35 @@ class User {
     id:number
 
     @Column({ name: 'first_name', nullable: false })
-    firstName: string
+    public firstName: string
 
     @Column({ name: 'last_name', nullable: false })
-    lastName: string
+    public lastName: string
 
     @Column({ unique:true, nullable: false })
-    phone: string
+    public phone: string
 
     @Column({ unique:true, nullable: false })
-    email: string
+    public email: string
 
     @Column({ nullable: false })
-    password: string
+    public password: string
 
     @Column({ name: 'is_finding', nullable: false })
-    isFinding: boolean
+    public isFinding: boolean
 
     @Column({
         type: "enum",
         enum: ["admin", "commom"],
         default: "commom"
     })
-    role: UserRoleType
+    public role: UserRoleType
 
     @Column()
-    avatar: string
+    public avatar: string
+
+    @OneToMany(type =>Pet, pet => Pet)
+    public pets: Pet[]
 
     @CreateDateColumn({name: 'created_at'})
     public createdAt: Date
