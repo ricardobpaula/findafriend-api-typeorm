@@ -1,12 +1,15 @@
 import { ConnectionOptions } from 'typeorm'
 
+const url = process.env.TYPEORM_URL
+
 const config:ConnectionOptions =  {
     type: 'postgres',
-    host: process.env.TYPEORM_HOST,
-    port: Number(process.env.TYPEORM_PORT),
-    username: process.env.TYPEORM_USERNAME,
-    password: process.env.TYPEORM_PASSWORD,
-    database: process.env.TYPEORM_DATABASE,
+    url: url ? url : undefined,
+    host: !url ? process.env.TYPEORM_HOST : undefined,
+    port: !url ? Number(process.env.TYPEORM_PORT) : undefined,
+    username: !url ? process.env.TYPEORM_USERNAME : undefined,
+    password: !url ? process.env.TYPEORM_PASSWORD : undefined,
+    database: !url ? process.env.TYPEORM_DATABASE : undefined,
     synchronize: process.env.TYPEORM_SYNCHRONIZE == 'true',
     logging: process.env.TYPEORM_LOGGING  == 'true',
     entities: [String(process.env.TYPEORM_ENTITIES)],

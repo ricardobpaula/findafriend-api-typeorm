@@ -11,7 +11,8 @@ usersRouter.post('/', async(request, response) => {
         email,
         password,
         isFinding,
-        role } = request.body
+        role,
+        isOng } = request.body
 
     const createUser = new CreateUserService()
     const authService = new AuthenticateUserService()
@@ -23,7 +24,8 @@ usersRouter.post('/', async(request, response) => {
         email,
         password,
         isFinding,
-        role })
+        role,
+        isOng })
 
     const { user, token } = await authService.execute({
         email,
@@ -38,6 +40,7 @@ usersRouter.post('/', async(request, response) => {
         email:user.email,
         isFinding:user.isFinding,
         role:user.role,
+        isOng: user.isOng
     }
 
     return response.status(201).cookie('user_id',user.id).json({user: userReturned, token})

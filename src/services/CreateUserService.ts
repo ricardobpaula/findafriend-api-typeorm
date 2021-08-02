@@ -12,11 +12,12 @@ interface Request {
     email: string,
     password: string,
     isFinding: boolean,
-    role: UserRoleType
+    role: UserRoleType,
+    isOng: boolean
 }
 
 class CreateUserService {
-    public async execute({firstName, lastName, phone, email, password, isFinding, role}: Request):Promise<User> {
+    public async execute({firstName, lastName, phone, email, password, isFinding, role, isOng}: Request):Promise<User> {
         const usersRepository = getRepository(User)
 
         const checkUserExists= await usersRepository.findOne({
@@ -37,6 +38,7 @@ class CreateUserService {
             password: hashedPassword,
             role,
             isFinding,
+            isOng,
             avatar: 'default.png'
         })
 

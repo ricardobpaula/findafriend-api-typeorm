@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm'
 import Pet from './Pet'
 
-export type UserRoleType = "admin" | "commom"
+export type UserRoleType = 'admin' | 'commom'
 
 @Entity('users')
 class User {
@@ -28,11 +28,17 @@ class User {
     public isFinding: boolean
 
     @Column({
-        type: "enum",
-        enum: ["admin", "commom"],
-        default: "commom"
+        type: 'enum',
+        enum: ['admin', 'commom'],
+        default: 'commom'
     })
     public role: UserRoleType
+
+    @Column({
+        name: 'is_ong',
+        default: false
+    })
+    public isOng: boolean
 
     @Column()
     public avatar: string
