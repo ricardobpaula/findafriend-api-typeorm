@@ -43,7 +43,7 @@ usersRouter.post('/', async(request, response) => {
         isOng: user.isOng
     }
 
-    return response.status(201).cookie('user_id',user.id).json({user: userReturned, token})
+    return response.status(201).json({user: userReturned, token})
 
 })
 
