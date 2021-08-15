@@ -4,7 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "start": "node bin/server.js",
+    "build": "yarn tsc",
     "dev": "yarn ts-node-dev --ignore-watch node_modules src/server.ts",
+    "log": "heroku logs --tail --app bot-ntw",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js --config ormconfig.ts"
   },
   "dependencies": {
